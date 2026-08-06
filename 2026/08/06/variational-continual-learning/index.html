@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
   
-  <meta name="robots" content="none">
+  
   <meta name="generator" content="Hexo 8.1.2">
   <meta http-equiv='x-dns-prefetch-control' content='on' />
   
@@ -17,25 +17,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
   <meta name="theme-color" content="#f9fafb">
-  <title>MBSE&AI</title>
+  <title>论文笔记 | Variational Continual Learning：用变分推断对抗灾难性遗忘 - MBSE&AI</title>
 
   
-    <meta name="description" content="记录读研日常、科研日常与非涉密项目的开发过程。研究方向涵盖无人协同、模型轻量化与边缘部署、MBSE 及优化算法，致力于仿真智能计算技术研究。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="MBSE&amp;AI">
-<meta property="og:url" content="https://flightleaf.github.io/404">
+    <meta name="description" content="持续学习（Continual Learning）是当前深度学习中极具挑战的问题之一：模型在陆续到来的任务上训练时，往往会”学一个新任务、忘掉旧任务”，这就是著名的灾难性遗忘（Catastrophic Forgetting）。这篇 ICLR 2018 的论文给出了一个优雅的回答——持续学习本质上就是贝叶斯推断。  基本信息   项目 内容    论文 Variational Continual L">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文笔记 | Variational Continual Learning：用变分推断对抗灾难性遗忘">
+<meta property="og:url" content="https://flightleaf.github.io/2026/08/06/variational-continual-learning/">
 <meta property="og:site_name" content="MBSE&amp;AI">
-<meta property="og:description" content="记录读研日常、科研日常与非涉密项目的开发过程。研究方向涵盖无人协同、模型轻量化与边缘部署、MBSE 及优化算法，致力于仿真智能计算技术研究。">
+<meta property="og:description" content="持续学习（Continual Learning）是当前深度学习中极具挑战的问题之一：模型在陆续到来的任务上训练时，往往会”学一个新任务、忘掉旧任务”，这就是著名的灾难性遗忘（Catastrophic Forgetting）。这篇 ICLR 2018 的论文给出了一个优雅的回答——持续学习本质上就是贝叶斯推断。  基本信息   项目 内容    论文 Variational Continual L">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://flightleaf.github.io/images/avatar.png">
+<meta property="article:published_time" content="2026-08-06T04:00:00.000Z">
+<meta property="article:modified_time" content="2026-08-06T09:54:35.190Z">
 <meta property="article:author" content="Flight">
-<meta property="article:tag" content="Edge AI, MBSE, AI, 模型轻量化, 边缘部署, 优化算法, 读研日常, 科研日常, 开发记录">
+<meta property="article:tag" content="变分推断">
+<meta property="article:tag" content="持续学习">
+<meta property="article:tag" content="论文笔记">
+<meta property="article:tag" content="贝叶斯深度学习">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://flightleaf.github.io/images/avatar.png">
   
   
   
-  <meta name="keywords" content="Edge AI, MBSE, AI, 模型轻量化, 边缘部署, 优化算法, 读研日常, 科研日常, 开发记录">
+  <meta name="keywords" content="持续学习,变分推断,贝叶斯深度学习,论文笔记">
 
   <!-- feed -->
   
@@ -51,12 +56,12 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://flightleaf.github.io","author":{"@type":"Person","name":"Flight","sameAs":[],"image":"/images/avatar.png"},"name":"MBSE&AI","description":"记录读研日常、科研日常与非涉密项目的开发过程。研究方向涵盖无人协同、模型轻量化与边缘部署、MBSE 及优化算法，致力于仿真智能计算技术研究。","url":"https://flightleaf.github.io"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Flight","sameAs":[],"image":"/images/avatar.png"},"dateCreated":"2026-08-06T12:00:00+08:00","dateModified":"2026-08-06T17:54:35+08:00","datePublished":"2026-08-06T12:00:00+08:00","description":"","headline":"论文笔记 | Variational Continual Learning：用变分推断对抗灾难性遗忘","mainEntityOfPage":{"@type":"WebPage","@id":"https://flightleaf.github.io/2026/08/06/variational-continual-learning/"},"publisher":{"@type":"Organization","name":"Flight","sameAs":[],"image":"/images/avatar.png","logo":{"@type":"ImageObject","url":"/images/avatar.png"}},"url":"https://flightleaf.github.io/2026/08/06/variational-continual-learning/","keywords":"持续学习, 变分推断, 贝叶斯深度学习, 论文笔记","image":[]}</script>
   
 </head>
 <body>
 
-<div class="l_body index" id="start" layout="404" type="undefined" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
 
 
 <header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/images/avatar.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">MBSE&AI</div><div class="sub normal cap">读研日常 · 科研日常 · 开发记录</div><div class="sub hover cap" style="opacity:0"> MBSE × AI Blog</div></a></div></header>
@@ -68,6 +73,8 @@
 <div class="widgets">
 <div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
 
+
+
 <widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2026/08/06/variational-continual-learning/"><span class="title">论文笔记 | Variational Continual Learning：用变分推断对抗灾难性遗忘</span></a></div></widget>
 </div>
 <footer class="footer dis-select"><div class="social-wrap"><a class="social" href="https://github.com/flightleaf" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://api.iconify.design/simple-icons:github.svg"></a><a class="social" href="https://gitee.com/flight-leaf" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://api.iconify.design/simple-icons:gitee.svg"></a><a class="social" href="https://blog.csdn.net/weixin_63918357" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://api.iconify.design/simple-icons:csdn.svg"></a><a class="social" href="mailto:baochun0314@foxmail.com" rel="noopener noreferrer"><img src="https://api.iconify.design/mdi:email-outline.svg"></a><a class="social" href="https://icct.uestc.edu.cn/" target="_blank" rel="external nofollow noopener noreferrer"><img src="https://api.iconify.design/mdi:school-outline.svg"></a></div></footer>
@@ -75,19 +82,227 @@
 
 
 
-<article class='md-text error-page'>
-  <h1><img id='error' src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/404/1c830bfcd517d.svg' alt='404'></h1>
-  <p class='what'>
-    <strong>
-      很抱歉，您访问的页面不存在
-    </strong>
-  </p>
-  <p class='why'>
-    可能是输入地址有误或该地址已被删除
-  </p>
-  <br><br>
-  <a class='button' id='back' href="/">返回主页</a>
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E7%A7%91%E7%A0%94%E6%97%A5%E5%B8%B8/">科研日常</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2026-08-06T04:00:00.000Z">2026-08-06</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2026-08-06T09:54:35.190Z">2026-08-06</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>论文笔记 | Variational Continual Learning：用变分推断对抗灾难性遗忘</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><blockquote>
+<p>持续学习（Continual Learning）是当前深度学习中极具挑战的问题之一：模型在陆续到来的任务上训练时，往往会”学一个新任务、忘掉旧任务”，这就是著名的<strong>灾难性遗忘</strong>（Catastrophic Forgetting）。这篇 ICLR 2018 的论文给出了一个优雅的回答——<strong>持续学习本质上就是贝叶斯推断</strong>。</p>
+</blockquote>
+<h2 id="基本信息"><a href="#基本信息" class="headerlink" title="基本信息"></a>基本信息</h2><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>论文</td>
+<td>Variational Continual Learning</td>
+</tr>
+<tr>
+<td>作者</td>
+<td>Cuong V. Nguyen, Yingzhen Li, Thang D. Bui, Richard E. Turner</td>
+</tr>
+<tr>
+<td>单位</td>
+<td>University of Cambridge, Department of Engineering</td>
+</tr>
+<tr>
+<td>会议</td>
+<td>ICLR 2018</td>
+</tr>
+<tr>
+<td>arXiv</td>
+<td><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1710.10628">1710.10628</a></td>
+</tr>
+<tr>
+<td>代码</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/nvcuong/variational-continual-learning">variational-continual-learning</a></td>
+</tr>
+</tbody></table>
+<h2 id="1-问题背景：灾难性遗忘"><a href="#1-问题背景：灾难性遗忘" class="headerlink" title="1. 问题背景：灾难性遗忘"></a>1. 问题背景：灾难性遗忘</h2><p>深度神经网络在<strong>非独立同分布</strong>的数据流上持续学习时，会面临一个核心矛盾：</p>
+<ul>
+<li><strong>过强的可塑性</strong>（Plasticity）→ 模型过度适应新数据，遗忘旧任务 → 灾难性遗忘（McCloskey &amp; Cohen, 1989）</li>
+<li><strong>过强的稳定性</strong>（Stability）→ 模型无法适应新任务</li>
+</ul>
+<p>此前的主流方法是<strong>正则化最大似然</strong>，即在损失中加入对参数变化的惩罚，代表性工作包括：</p>
+<ul>
+<li><strong>EWC</strong>（Elastic Weight Consolidation, Kirkpatrick et al., 2017）：用 Fisher 信息矩阵近似参数重要性，对重要参数施加强正则</li>
+<li><strong>SI</strong>（Synaptic Intelligence, Zenke et al., 2017）：根据训练过程中梯度的变化率估计参数重要性</li>
+<li><strong>Laplace Propagation</strong>（Smola et al., 2004）：在每步做拉普拉斯近似</li>
+</ul>
+<p>这些方法都带有一个需要人工调节的超参数 $\lambda$（正则强度），且只保留参数的点估计，不确定性信息是缺失的。</p>
+<h2 id="2-核心思想：贝叶斯推断就是持续学习"><a href="#2-核心思想：贝叶斯推断就是持续学习" class="headerlink" title="2. 核心思想：贝叶斯推断就是持续学习"></a>2. 核心思想：贝叶斯推断就是持续学习</h2><p>论文的出发点非常简洁：<strong>贝叶斯推断天然就是持续的</strong>。</p>
+<p>假设参数先验为 $p(\theta)$，观察到 $T$ 个数据集 $D_{1:T}$ 后，后验为：</p>
+<p>$$p(\theta|D_{1:T}) \propto p(\theta)\prod_{t&#x3D;1}^{T} p(D_t|\theta) &#x3D; p(\theta|D_{1:T-1}), p(D_T|\theta)$$</p>
+<p>关键在于这个<strong>递归结构</strong>：看到第 $T$ 个数据集的后验 &#x3D; 看到前 $T-1$ 个数据集的后验 × 新数据的似然。也就是说，<strong>旧数据对参数的约束全部编码在了”上一个后验”里</strong>，新任务到来时只需把上一个后验当作先验使用即可——不需要回顾旧数据，旧知识也不会被冲掉。</p>
+<p>这恰恰解决了灾难性遗忘的核心矛盾：</p>
+<ul>
+<li>旧后验中方差小的参数（被旧数据约束死的参数）难以改变 → 稳定性</li>
+<li>方差大的参数仍可自由更新 → 可塑性</li>
+</ul>
+<p> 💡 <strong>“Projection”视角</strong>：每一步都是把不可处理的真实后验投影（Project）到一个可处理的近似分布族上，即 $q_t(\theta) &#x3D; \mathrm{proj}\big(q_{t-1}(\theta)p(D_t|\theta)\big)$。不同的投影算子对应不同的经典算法：KL 最小化 → 在线变分推断；矩匹配 → 假定密度滤波（ADF）；重要性采样 → 序列蒙特卡洛（SMC）。</p>
+<h2 id="3-VCL：变分持续学习"><a href="#3-VCL：变分持续学习" class="headerlink" title="3. VCL：变分持续学习"></a>3. VCL：变分持续学习</h2><p>既然精确贝叶斯推断不可处理，VCL 选择用<strong>在线变分推断</strong>（Online VI, Ghahramani &amp; Attias, 2000; Sato, 2001）作为投影算子，结合 Blundell et al. (2015) 的蒙特卡洛变分推断（Bayes by Backprop）训练深度网络。</p>
+<p>每一步求解：</p>
+<p>$$q_t(\theta) &#x3D; \arg\min_{q \in \mathcal{Q}} \mathrm{KL}\Big( q(\theta) ,\Big\Vert, \frac{1}{Z_t} q_{t-1}(\theta), p(D_t|\theta) \Big)$$</p>
+<p>等价于最大化<strong>负在线变分自由能</strong>：</p>
+<p>$$\mathcal{L}_t^{\mathrm{VCL}}(q_t) &#x3D; \sum_{n&#x3D;1}^{N_t} \mathbb{E}_{\theta \sim q_t}\big[\log p(y_t^{(n)}|\theta, x_t^{(n)})\big] - \mathrm{KL}\big(q_t(\theta)\Vert q_{t-1}(\theta)\big)$$</p>
+<p>其中：</p>
+<ul>
+<li>期望似然项用蒙特卡洛估计，配合<strong>局部重参数化技巧</strong>（Local Reparameterization Trick）计算梯度</li>
+<li>KL 项在分布族内可闭式求解</li>
+</ul>
+<p>近似后验族采用<strong>高斯平均场</strong>：$q_t(\theta) &#x3D; \prod_{d} \mathcal{N}(\mu_{t,d}, \sigma_{t,d}^2)$，训练等价于在每层权重上施加变分 Dropout（不确定性估计）。</p>
+<p><strong>VCL 与 EWC&#x2F;SI&#x2F;LP 的关键区别：</strong></p>
+<ol>
+<li><strong>无自由超参数</strong>：目标函数中没有需要调参的 $\lambda$，超参数搜索在在线场景下是很尴尬的</li>
+<li><strong>保留完整分布</strong>：训练和测试时都对后验分布做平均，而不是只用一个点估计</li>
+<li><strong>不确定性更好</strong>：VI 比拉普拉斯近似、MAP 的不确定性估计质量更高</li>
+</ol>
+<h2 id="4-Coreset-VCL：情景记忆增强"><a href="#4-Coreset-VCL：情景记忆增强" class="headerlink" title="4. Coreset VCL：情景记忆增强"></a>4. Coreset VCL：情景记忆增强</h2><p>反复的投影会累积近似误差，可能导致模型”忘记”旧任务。为此论文引入<strong>核心集</strong>（Coreset）作为<strong>情景记忆</strong>（Episodic Memory）——从每个旧任务中保留少量代表性数据点，模拟人类回忆过去经历的能力。</p>
+<blockquote>
+<p>⚠️ <strong>核心集选择有两种策略</strong>：</p>
+<ul>
+<li><strong>随机采样</strong>：从每个任务随机取 $K$ 个点</li>
+<li><strong>K-center 算法</strong>（Gonzalez, 1985）：贪心地选取覆盖整个输入空间的 $K$ 个点（保证分布分散）</li>
+</ul>
+</blockquote>
+<p>Coreset VCL 的核心机制（见论文 Algorithm 1）：</p>
+<ol>
+<li>对<strong>不在核心集中</strong>的数据做变分递归更新：$\tilde{q}_t &#x3D; \mathrm{proj}\big(\tilde{q}_{t-1}(\theta), p(D_t \cup C_{t-1}\backslash C_t|\theta)\big)$</li>
+<li>预测前，再把核心集数据“回放”一遍：$q_t &#x3D; \mathrm{proj}\big(\tilde{q}_t(\theta), p(C_t|\theta)\big)$</li>
+</ol>
+<p>直观理解：核心集相当于消息传递（Message Passing）中优先级最高的消息，在每步预测前重新”唤醒”旧记忆，从而缓解遗忘。</p>
+<h2 id="5-判别模型与生成模型"><a href="#5-判别模型与生成模型" class="headerlink" title="5. 判别模型与生成模型"></a>5. 判别模型与生成模型</h2><p>VCL 是一个通用框架，论文在两类模型上验证：</p>
+<h3 id="判别模型（分类网络）"><a href="#判别模型（分类网络）" class="headerlink" title="判别模型（分类网络）"></a>判别模型（分类网络）</h3><p>根据任务性质选择网络结构：</p>
+<ul>
+<li><strong>单头网络</strong>（Single-head）：适用于输入分布变化而输出不变的任务（如 Permuted MNIST）</li>
+<li><strong>多头网络</strong>（Multi-head）：共享底层 $\theta_S$，每个任务有自己的头网络 $\theta_t^H$（如 Split MNIST 的 0&#x2F;1、2&#x2F;3 等任务，输出空间不同）</li>
+</ul>
+<p>多头结构的好处：新任务出现时，其头参数的后验直接初始化为先验，变分分布可以随任务<strong>增量生长</strong>，且只需更新当前任务涉及的头。</p>
+<h3 id="生成模型（VAE）"><a href="#生成模型（VAE）" class="headerlink" title="生成模型（VAE）"></a>生成模型（VAE）</h3><p>对 VAE 扩展时，不仅对参数 $\theta$ 做变分后验，还保留任务特定的编码器 $q_\phi(z|x)$。架构上选择<strong>共享高层生成网络</strong>（从中间表示 $h$ 生成 $x$ 的部分共享），每个任务私有的低层”头网络”（从隐变量 $z$ 生成 $h$）——这更符合”共享笔画等结构基元、任务决定高层语义”的直觉。</p>
+<h2 id="6-实验与结果"><a href="#6-实验与结果" class="headerlink" title="6. 实验与结果"></a>6. 实验与结果</h2><h3 id="6-1-判别模型"><a href="#6-1-判别模型" class="headerlink" title="6.1 判别模型"></a>6.1 判别模型</h3><p><strong>Permuted MNIST</strong>（10 个任务，每个任务对 MNIST 像素施加不同随机排列，单头网络）：</p>
+<table>
+<thead>
+<tr>
+<th>方法（任务 10 后平均准确率）</th>
+<th>准确率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>EWC（最优 $\lambda$）</td>
+<td>84%</td>
+</tr>
+<tr>
+<td>SI（最优 $\lambda$）</td>
+<td>86%</td>
+</tr>
+<tr>
+<td>LP（最优 $\lambda$）</td>
+<td>82%</td>
+</tr>
+<tr>
+<td><strong>VCL</strong></td>
+<td><strong>90%</strong></td>
+</tr>
+<tr>
+<td><strong>VCL + Coreset（每任务 200 点）</strong></td>
+<td><strong>93%</strong></td>
+</tr>
+<tr>
+<td>VCL + Coreset（每任务 5000 点）</td>
+<td>95.5%</td>
+</tr>
+</tbody></table>
+<p>注意 EWC&#x2F;SI&#x2F;LP 都经过了<strong>详尽的超参数搜索</strong>（”best $\lambda$”），而 VCL 是零调参的。另外单独使用 Coreset 效果很差，说明<strong>核心集与变分后验的结合才是关键</strong>——变分后验提供了”记忆骨架”，核心集负责”细节补充”。</p>
+<p><strong>Split MNIST</strong>（5 个二分类任务，多头网络）：</p>
+<table>
+<thead>
+<tr>
+<th>方法（5 任务后平均准确率）</th>
+<th>准确率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>EWC（最优 $\lambda$）</td>
+<td>63.1%</td>
+</tr>
+<tr>
+<td>SI（最优 $\lambda$）</td>
+<td>98.9%</td>
+</tr>
+<tr>
+<td>LP</td>
+<td>61.2%</td>
+</tr>
+<tr>
+<td><strong>VCL</strong></td>
+<td><strong>97.0%</strong></td>
+</tr>
+<tr>
+<td><strong>VCL + Coreset</strong></td>
+<td><strong>98.4%</strong></td>
+</tr>
+</tbody></table>
+<p><strong>Split notMNIST</strong>（5 个二分类任务，4 层网络）：VCL 达 92.0%，加随机核心集提升到 96%，与 SI（94%）持平或更好，显著超过 EWC（71%）和 LP（63%）。</p>
+<h3 id="6-2-生成模型"><a href="#6-2-生成模型" class="headerlink" title="6.2 生成模型"></a>6.2 生成模型</h3><p>在 MNIST 数字（0-9 逐个任务到达）和 notMNIST 字符（A-J）生成任务上：</p>
+<ul>
+<li><strong>Naive VAE 直接灾难性失败</strong>：只能生成最近任务的样本</li>
+<li>VCL 与 SI 的生成质量最佳，且 <strong>VCL 在测试似然（Test-LL）和”分类器不确定性”两个指标上优于或持平 SI</strong>，展现出更强的长期记忆</li>
+<li>LP&#x2F;EWC 在任务差异大时（如从数字 0 到 1）性能显著退化</li>
+</ul>
+<h2 id="7-个人思考"><a href="#7-个人思考" class="headerlink" title="7. 个人思考"></a>7. 个人思考</h2><p><strong>这篇论文的贡献</strong>，我认为不只是提出一个性能更好的方法，更重要的是<strong>视角的转换</strong>：它把持续学习重新放回贝叶斯框架中，让”旧知识如何保留”这个难题有了一个原则性的答案——后验就是记忆。相比之下 EWC 的 $\lambda$ 更像工程上的补丁，而 VCL 的超参数就是”没有超参数”。</p>
+<p>几个值得注意的点：</p>
+<ol>
+<li><p><strong>任务边界的假设</strong>：VCL（及同期工作）假设任务切换时刻已知，且多头网络需要知道当前任务 ID（task oracle）。这与真实世界中”任务连续演化、无明确边界”的场景还有差距，论文也在摘要中强调了”existing tasks evolve over time and entirely new tasks emerge”的动机，但实验设置仍偏理想化。</p>
+</li>
+<li><p><strong>近似族的局限</strong>：高斯平均场的表达能力有限，任务序列变长时，反复 KL 投影的误差积累（posterior collapse &#x2F; 对不确定性估计的退化）仍是个问题。后续工作（如 Variational Continual Bayesian Meta-Learning、Bayesian Gradient-based 等方法）在这一点上做了改进。</p>
+</li>
+<li><p><strong>计算代价</strong>：维护参数的完整分布（均值+方差）意味着参数量翻倍，训练时需要对权重采样，这在当时的大模型上代价不菲。不过近年来”先训练再贝叶斯化”（如 SWAG、Laplace 后验）的思路可以缓解这一点。</p>
+</li>
+<li><p><strong>核心集的现代视角</strong>：Coreset 其实就是后来”经验回放（Experience Replay）”家族的前身，也是 memory-augmented continual learning 的雏形。当时随机采样与 K-center 差距不大，但后来的研究表明<strong>基于梯度或不确定性的选择策略</strong>能进一步提效。</p>
+</li>
+<li><p><strong>与贝叶斯在线学习的关系</strong>：VCL 与流式贝叶斯（Streaming Variational Bayes）同源，实际上就是把后者搬到了深度网络上。这也解释了为什么它”自动”——整个框架没有任何需要验证集调节的旋钮，这在在线场景中是很大的工程优势。</p>
+</li>
+</ol>
+<blockquote>
+<p>⭐ <strong>一句话总结</strong>：VCL 证明了”持续学习 &#x3D; 贝叶斯推断”——把上一个任务的后验当作下一个任务的先验，用变分推断自动完成知识保留，再用核心集作为情景记忆弥补近似误差，在判别与生成模型上都达到了当时的最优水平，且无需任何超参数调节。</p>
+</blockquote>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li>Nguyen, C. V., Li, Y., Bui, T. D., &amp; Turner, R. E. (2018). Variational Continual Learning. <em>ICLR 2018</em>.</li>
+<li>Kirkpatrick, J., et al. (2017). Overcoming catastrophic forgetting in neural networks. <em>PNAS</em>.</li>
+<li>Zenke, F., Poole, B., &amp; Ganguli, S. (2017). Continual Learning Through Synaptic Intelligence. <em>ICML</em>.</li>
+<li>Blundell, C., et al. (2015). Weight Uncertainty in Neural Networks. <em>ICML</em>.</li>
+<li>Gonzalez, T. F. (1985). Clustering to minimize the maximum intercluster distance. <em>Theoretical Computer Science</em>.</li>
+</ul>
 </article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+</div>
+
+
+
+<div class="related-wrap" id="related-posts"></div>
 
 
 
@@ -95,7 +310,10 @@
 <footer class="page-footer footnote"><hr><div class="sitemap" style="column-count:2;"><div class="sitemap-group"><span class="fs15">内容</span><a href="/">近期发布</a><a href="/categories/">分类</a><a href="/tags/">标签</a><a href="/archives/">归档</a><a href="/atom.xml">RSS 订阅</a></div><div class="sitemap-group"><span class="fs15">关于</span><a href="/about/">关于我</a><a target="_blank" rel="noopener" href="https://github.com/flightleaf">GitHub</a><a target="_blank" rel="noopener" href="https://gitee.com/flight-leaf">Gitee</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_63918357">CSDN</a><a target="_blank" rel="noopener" href="https://icct.uestc.edu.cn/">实验室</a></div></div><div class="text"><p>本站由 <a href="/">Flight</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
 </div></footer>
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
-</aside><div class='float-panel'>
+<div class="widgets">
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-text">基本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E9%97%AE%E9%A2%98%E8%83%8C%E6%99%AF%EF%BC%9A%E7%81%BE%E9%9A%BE%E6%80%A7%E9%81%97%E5%BF%98"><span class="toc-text">1. 问题背景：灾难性遗忘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%EF%BC%9A%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%8E%A8%E6%96%AD%E5%B0%B1%E6%98%AF%E6%8C%81%E7%BB%AD%E5%AD%A6%E4%B9%A0"><span class="toc-text">2. 核心思想：贝叶斯推断就是持续学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-VCL%EF%BC%9A%E5%8F%98%E5%88%86%E6%8C%81%E7%BB%AD%E5%AD%A6%E4%B9%A0"><span class="toc-text">3. VCL：变分持续学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Coreset-VCL%EF%BC%9A%E6%83%85%E6%99%AF%E8%AE%B0%E5%BF%86%E5%A2%9E%E5%BC%BA"><span class="toc-text">4. Coreset VCL：情景记忆增强</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%88%A4%E5%88%AB%E6%A8%A1%E5%9E%8B%E4%B8%8E%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B"><span class="toc-text">5. 判别模型与生成模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E5%88%AB%E6%A8%A1%E5%9E%8B%EF%BC%88%E5%88%86%E7%B1%BB%E7%BD%91%E7%BB%9C%EF%BC%89"><span class="toc-text">判别模型（分类网络）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%EF%BC%88VAE%EF%BC%89"><span class="toc-text">生成模型（VAE）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%AE%9E%E9%AA%8C%E4%B8%8E%E7%BB%93%E6%9E%9C"><span class="toc-text">6. 实验与结果</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E5%88%A4%E5%88%AB%E6%A8%A1%E5%9E%8B"><span class="toc-text">6.1 判别模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B"><span class="toc-text">6.2 生成模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E4%B8%AA%E4%BA%BA%E6%80%9D%E8%80%83"><span class="toc-text">7. 个人思考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-text">参考文献</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+</div></aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
   </button>
