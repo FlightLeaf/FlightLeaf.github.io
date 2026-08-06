@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://flightleaf.github.io/images/avatar.png">
 <meta property="article:published_time" content="2026-08-06T04:00:00.000Z">
-<meta property="article:modified_time" content="2026-08-06T09:54:35.190Z">
+<meta property="article:modified_time" content="2026-08-06T12:01:45.706Z">
 <meta property="article:author" content="Flight">
 <meta property="article:tag" content="变分推断">
 <meta property="article:tag" content="持续学习">
@@ -56,7 +56,7 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Flight","sameAs":[],"image":"/images/avatar.png"},"dateCreated":"2026-08-06T12:00:00+08:00","dateModified":"2026-08-06T17:54:35+08:00","datePublished":"2026-08-06T12:00:00+08:00","description":"","headline":"论文笔记 | Variational Continual Learning：用变分推断对抗灾难性遗忘","mainEntityOfPage":{"@type":"WebPage","@id":"https://flightleaf.github.io/2026/08/06/variational-continual-learning/"},"publisher":{"@type":"Organization","name":"Flight","sameAs":[],"image":"/images/avatar.png","logo":{"@type":"ImageObject","url":"/images/avatar.png"}},"url":"https://flightleaf.github.io/2026/08/06/variational-continual-learning/","keywords":"持续学习, 变分推断, 贝叶斯深度学习, 论文笔记","image":[]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Flight","sameAs":[],"image":"/images/avatar.png"},"dateCreated":"2026-08-06T12:00:00+08:00","dateModified":"2026-08-06T20:01:45+08:00","datePublished":"2026-08-06T12:00:00+08:00","description":"","headline":"论文笔记 | Variational Continual Learning：用变分推断对抗灾难性遗忘","mainEntityOfPage":{"@type":"WebPage","@id":"https://flightleaf.github.io/2026/08/06/variational-continual-learning/"},"publisher":{"@type":"Organization","name":"Flight","sameAs":[],"image":"/images/avatar.png","logo":{"@type":"ImageObject","url":"/images/avatar.png"}},"url":"https://flightleaf.github.io/2026/08/06/variational-continual-learning/","keywords":"持续学习, 变分推断, 贝叶斯深度学习, 论文笔记","image":[]}</script>
   
 </head>
 <body>
@@ -88,7 +88,7 @@
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E7%A7%91%E7%A0%94%E6%97%A5%E5%B8%B8/">科研日常</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2026-08-06T04:00:00.000Z">2026-08-06</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2026-08-06T09:54:35.190Z">2026-08-06</time></span></div></div></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2026-08-06T04:00:00.000Z">2026-08-06</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2026-08-06T12:01:45.706Z">2026-08-06</time></span></div></div></div>
     
     <div class="bottom only-title">
       
@@ -145,31 +145,28 @@
 <li><strong>SI</strong>（Synaptic Intelligence, Zenke et al., 2017）：根据训练过程中梯度的变化率估计参数重要性</li>
 <li><strong>Laplace Propagation</strong>（Smola et al., 2004）：在每步做拉普拉斯近似</li>
 </ul>
-<p>这些方法都带有一个需要人工调节的超参数 $\lambda$（正则强度），且只保留参数的点估计，不确定性信息是缺失的。</p>
+<p>这些方法都带有一个需要人工调节的超参数 <span class="math math-inline">$\lambda$</span>（正则强度），且只保留参数的点估计，不确定性信息是缺失的。</p>
 <h2 id="2-核心思想：贝叶斯推断就是持续学习"><a href="#2-核心思想：贝叶斯推断就是持续学习" class="headerlink" title="2. 核心思想：贝叶斯推断就是持续学习"></a>2. 核心思想：贝叶斯推断就是持续学习</h2><p>论文的出发点非常简洁：<strong>贝叶斯推断天然就是持续的</strong>。</p>
-<p>假设参数先验为 $p(\theta)$，观察到 $T$ 个数据集 $D_{1:T}$ 后，后验为：</p>
-<p>$$p(\theta|D_{1:T}) \propto p(\theta)\prod_{t&#x3D;1}^{T} p(D_t|\theta) &#x3D; p(\theta|D_{1:T-1}), p(D_T|\theta)$$</p>
-<p>关键在于这个<strong>递归结构</strong>：看到第 $T$ 个数据集的后验 &#x3D; 看到前 $T-1$ 个数据集的后验 × 新数据的似然。也就是说，<strong>旧数据对参数的约束全部编码在了”上一个后验”里</strong>，新任务到来时只需把上一个后验当作先验使用即可——不需要回顾旧数据，旧知识也不会被冲掉。</p>
+<p>假设参数先验为 <span class="math math-inline">$p(\theta)$</span>，观察到 <span class="math math-inline">$T$</span> 个数据集 <span class="math math-inline">$D_{1:T}$</span> 后，后验为：</p>
+<div class="math math-block">$$p(\theta|D_{1:T}) \propto p(\theta)\prod_{t=1}^{T} p(D_t|\theta) = p(\theta|D_{1:T-1})\, p(D_T|\theta)$$</div><p>关键在于这个<strong>递归结构</strong>：看到第 <span class="math math-inline">$T$</span> 个数据集的后验 &#x3D; 看到前 <span class="math math-inline">$T-1$</span> 个数据集的后验 × 新数据的似然。也就是说，<strong>旧数据对参数的约束全部编码在了”上一个后验”里</strong>，新任务到来时只需把上一个后验当作先验使用即可——不需要回顾旧数据，旧知识也不会被冲掉。</p>
 <p>这恰恰解决了灾难性遗忘的核心矛盾：</p>
 <ul>
 <li>旧后验中方差小的参数（被旧数据约束死的参数）难以改变 → 稳定性</li>
 <li>方差大的参数仍可自由更新 → 可塑性</li>
 </ul>
-<p> 💡 <strong>“Projection”视角</strong>：每一步都是把不可处理的真实后验投影（Project）到一个可处理的近似分布族上，即 $q_t(\theta) &#x3D; \mathrm{proj}\big(q_{t-1}(\theta)p(D_t|\theta)\big)$。不同的投影算子对应不同的经典算法：KL 最小化 → 在线变分推断；矩匹配 → 假定密度滤波（ADF）；重要性采样 → 序列蒙特卡洛（SMC）。</p>
+<p> 💡 <strong>“Projection”视角</strong>：每一步都是把不可处理的真实后验投影（Project）到一个可处理的近似分布族上，即 <span class="math math-inline">$q_t(\theta) = \mathrm{proj}\big(q_{t-1}(\theta)p(D_t|\theta)\big)$</span>。不同的投影算子对应不同的经典算法：KL 最小化 → 在线变分推断；矩匹配 → 假定密度滤波（ADF）；重要性采样 → 序列蒙特卡洛（SMC）。</p>
 <h2 id="3-VCL：变分持续学习"><a href="#3-VCL：变分持续学习" class="headerlink" title="3. VCL：变分持续学习"></a>3. VCL：变分持续学习</h2><p>既然精确贝叶斯推断不可处理，VCL 选择用<strong>在线变分推断</strong>（Online VI, Ghahramani &amp; Attias, 2000; Sato, 2001）作为投影算子，结合 Blundell et al. (2015) 的蒙特卡洛变分推断（Bayes by Backprop）训练深度网络。</p>
 <p>每一步求解：</p>
-<p>$$q_t(\theta) &#x3D; \arg\min_{q \in \mathcal{Q}} \mathrm{KL}\Big( q(\theta) ,\Big\Vert, \frac{1}{Z_t} q_{t-1}(\theta), p(D_t|\theta) \Big)$$</p>
-<p>等价于最大化<strong>负在线变分自由能</strong>：</p>
-<p>$$\mathcal{L}_t^{\mathrm{VCL}}(q_t) &#x3D; \sum_{n&#x3D;1}^{N_t} \mathbb{E}_{\theta \sim q_t}\big[\log p(y_t^{(n)}|\theta, x_t^{(n)})\big] - \mathrm{KL}\big(q_t(\theta)\Vert q_{t-1}(\theta)\big)$$</p>
-<p>其中：</p>
+<div class="math math-block">$$q_t(\theta) = \arg\min_{q \in \mathcal{Q}} \mathrm{KL}\Big( q(\theta) \,\Big\Vert\, \frac{1}{Z_t} q_{t-1}(\theta)\, p(D_t|\theta) \Big)$$</div><p>等价于最大化<strong>负在线变分自由能</strong>：</p>
+<div class="math math-block">$$\mathcal{L}_t^{\mathrm{VCL}}(q_t) = \sum_{n=1}^{N_t} \mathbb{E}_{\theta \sim q_t}\big[\log p(y_t^{(n)}|\theta, x_t^{(n)})\big] - \mathrm{KL}\big(q_t(\theta)\Vert q_{t-1}(\theta)\big)$$</div><p>其中：</p>
 <ul>
 <li>期望似然项用蒙特卡洛估计，配合<strong>局部重参数化技巧</strong>（Local Reparameterization Trick）计算梯度</li>
 <li>KL 项在分布族内可闭式求解</li>
 </ul>
-<p>近似后验族采用<strong>高斯平均场</strong>：$q_t(\theta) &#x3D; \prod_{d} \mathcal{N}(\mu_{t,d}, \sigma_{t,d}^2)$，训练等价于在每层权重上施加变分 Dropout（不确定性估计）。</p>
+<p>近似后验族采用<strong>高斯平均场</strong>：<span class="math math-inline">$q_t(\theta) = \prod_{d} \mathcal{N}(\mu_{t,d}, \sigma_{t,d}^2)$</span>，训练等价于在每层权重上施加变分 Dropout（不确定性估计）。</p>
 <p><strong>VCL 与 EWC&#x2F;SI&#x2F;LP 的关键区别：</strong></p>
 <ol>
-<li><strong>无自由超参数</strong>：目标函数中没有需要调参的 $\lambda$，超参数搜索在在线场景下是很尴尬的</li>
+<li><strong>无自由超参数</strong>：目标函数中没有需要调参的 <span class="math math-inline">$\lambda$</span>，超参数搜索在在线场景下是很尴尬的</li>
 <li><strong>保留完整分布</strong>：训练和测试时都对后验分布做平均，而不是只用一个点估计</li>
 <li><strong>不确定性更好</strong>：VI 比拉普拉斯近似、MAP 的不确定性估计质量更高</li>
 </ol>
@@ -177,24 +174,24 @@
 <blockquote>
 <p>⚠️ <strong>核心集选择有两种策略</strong>：</p>
 <ul>
-<li><strong>随机采样</strong>：从每个任务随机取 $K$ 个点</li>
-<li><strong>K-center 算法</strong>（Gonzalez, 1985）：贪心地选取覆盖整个输入空间的 $K$ 个点（保证分布分散）</li>
+<li><strong>随机采样</strong>：从每个任务随机取 <span class="math math-inline">$K$</span> 个点</li>
+<li><strong>K-center 算法</strong>（Gonzalez, 1985）：贪心地选取覆盖整个输入空间的 <span class="math math-inline">$K$</span> 个点（保证分布分散）</li>
 </ul>
 </blockquote>
 <p>Coreset VCL 的核心机制（见论文 Algorithm 1）：</p>
 <ol>
-<li>对<strong>不在核心集中</strong>的数据做变分递归更新：$\tilde{q}_t &#x3D; \mathrm{proj}\big(\tilde{q}_{t-1}(\theta), p(D_t \cup C_{t-1}\backslash C_t|\theta)\big)$</li>
-<li>预测前，再把核心集数据“回放”一遍：$q_t &#x3D; \mathrm{proj}\big(\tilde{q}_t(\theta), p(C_t|\theta)\big)$</li>
+<li>对<strong>不在核心集中</strong>的数据做变分递归更新：<span class="math math-inline">$\tilde{q}_t = \mathrm{proj}\big(\tilde{q}_{t-1}(\theta)\, p(D_t \cup C_{t-1}\backslash C_t|\theta)\big)$</span></li>
+<li>预测前，再把核心集数据“回放”一遍：<span class="math math-inline">$q_t = \mathrm{proj}\big(\tilde{q}_t(\theta)\, p(C_t|\theta)\big)$</span></li>
 </ol>
 <p>直观理解：核心集相当于消息传递（Message Passing）中优先级最高的消息，在每步预测前重新”唤醒”旧记忆，从而缓解遗忘。</p>
 <h2 id="5-判别模型与生成模型"><a href="#5-判别模型与生成模型" class="headerlink" title="5. 判别模型与生成模型"></a>5. 判别模型与生成模型</h2><p>VCL 是一个通用框架，论文在两类模型上验证：</p>
 <h3 id="判别模型（分类网络）"><a href="#判别模型（分类网络）" class="headerlink" title="判别模型（分类网络）"></a>判别模型（分类网络）</h3><p>根据任务性质选择网络结构：</p>
 <ul>
 <li><strong>单头网络</strong>（Single-head）：适用于输入分布变化而输出不变的任务（如 Permuted MNIST）</li>
-<li><strong>多头网络</strong>（Multi-head）：共享底层 $\theta_S$，每个任务有自己的头网络 $\theta_t^H$（如 Split MNIST 的 0&#x2F;1、2&#x2F;3 等任务，输出空间不同）</li>
+<li><strong>多头网络</strong>（Multi-head）：共享底层 <span class="math math-inline">$\theta_S$</span>，每个任务有自己的头网络 <span class="math math-inline">$\theta_t^H$</span>（如 Split MNIST 的 0&#x2F;1、2&#x2F;3 等任务，输出空间不同）</li>
 </ul>
 <p>多头结构的好处：新任务出现时，其头参数的后验直接初始化为先验，变分分布可以随任务<strong>增量生长</strong>，且只需更新当前任务涉及的头。</p>
-<h3 id="生成模型（VAE）"><a href="#生成模型（VAE）" class="headerlink" title="生成模型（VAE）"></a>生成模型（VAE）</h3><p>对 VAE 扩展时，不仅对参数 $\theta$ 做变分后验，还保留任务特定的编码器 $q_\phi(z|x)$。架构上选择<strong>共享高层生成网络</strong>（从中间表示 $h$ 生成 $x$ 的部分共享），每个任务私有的低层”头网络”（从隐变量 $z$ 生成 $h$）——这更符合”共享笔画等结构基元、任务决定高层语义”的直觉。</p>
+<h3 id="生成模型（VAE）"><a href="#生成模型（VAE）" class="headerlink" title="生成模型（VAE）"></a>生成模型（VAE）</h3><p>对 VAE 扩展时，不仅对参数 <span class="math math-inline">$\theta$</span> 做变分后验，还保留任务特定的编码器 <span class="math math-inline">$q_\phi(z|x)$</span>。架构上选择<strong>共享高层生成网络</strong>（从中间表示 <span class="math math-inline">$h$</span> 生成 <span class="math math-inline">$x$</span> 的部分共享），每个任务私有的低层”头网络”（从隐变量 <span class="math math-inline">$z$</span> 生成 <span class="math math-inline">$h$</span>）——这更符合”共享笔画等结构基元、任务决定高层语义”的直觉。</p>
 <h2 id="6-实验与结果"><a href="#6-实验与结果" class="headerlink" title="6. 实验与结果"></a>6. 实验与结果</h2><h3 id="6-1-判别模型"><a href="#6-1-判别模型" class="headerlink" title="6.1 判别模型"></a>6.1 判别模型</h3><p><strong>Permuted MNIST</strong>（10 个任务，每个任务对 MNIST 像素施加不同随机排列，单头网络）：</p>
 <table>
 <thead>
@@ -204,15 +201,15 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>EWC（最优 $\lambda$）</td>
+<td>EWC（最优 <span class="math math-inline">$\lambda$</span>）</td>
 <td>84%</td>
 </tr>
 <tr>
-<td>SI（最优 $\lambda$）</td>
+<td>SI（最优 <span class="math math-inline">$\lambda$</span>）</td>
 <td>86%</td>
 </tr>
 <tr>
-<td>LP（最优 $\lambda$）</td>
+<td>LP（最优 <span class="math math-inline">$\lambda$</span>）</td>
 <td>82%</td>
 </tr>
 <tr>
@@ -228,7 +225,7 @@
 <td>95.5%</td>
 </tr>
 </tbody></table>
-<p>注意 EWC&#x2F;SI&#x2F;LP 都经过了<strong>详尽的超参数搜索</strong>（”best $\lambda$”），而 VCL 是零调参的。另外单独使用 Coreset 效果很差，说明<strong>核心集与变分后验的结合才是关键</strong>——变分后验提供了”记忆骨架”，核心集负责”细节补充”。</p>
+<p>注意 EWC&#x2F;SI&#x2F;LP 都经过了<strong>详尽的超参数搜索</strong>（”best <span class="math math-inline">$\lambda$</span>“），而 VCL 是零调参的。另外单独使用 Coreset 效果很差，说明<strong>核心集与变分后验的结合才是关键</strong>——变分后验提供了”记忆骨架”，核心集负责”细节补充”。</p>
 <p><strong>Split MNIST</strong>（5 个二分类任务，多头网络）：</p>
 <table>
 <thead>
@@ -238,11 +235,11 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>EWC（最优 $\lambda$）</td>
+<td>EWC（最优 <span class="math math-inline">$\lambda$</span>）</td>
 <td>63.1%</td>
 </tr>
 <tr>
-<td>SI（最优 $\lambda$）</td>
+<td>SI（最优 <span class="math math-inline">$\lambda$</span>）</td>
 <td>98.9%</td>
 </tr>
 <tr>
@@ -265,7 +262,7 @@
 <li>VCL 与 SI 的生成质量最佳，且 <strong>VCL 在测试似然（Test-LL）和”分类器不确定性”两个指标上优于或持平 SI</strong>，展现出更强的长期记忆</li>
 <li>LP&#x2F;EWC 在任务差异大时（如从数字 0 到 1）性能显著退化</li>
 </ul>
-<h2 id="7-个人思考"><a href="#7-个人思考" class="headerlink" title="7. 个人思考"></a>7. 个人思考</h2><p><strong>这篇论文的贡献</strong>，我认为不只是提出一个性能更好的方法，更重要的是<strong>视角的转换</strong>：它把持续学习重新放回贝叶斯框架中，让”旧知识如何保留”这个难题有了一个原则性的答案——后验就是记忆。相比之下 EWC 的 $\lambda$ 更像工程上的补丁，而 VCL 的超参数就是”没有超参数”。</p>
+<h2 id="7-个人思考"><a href="#7-个人思考" class="headerlink" title="7. 个人思考"></a>7. 个人思考</h2><p><strong>这篇论文的贡献</strong>，我认为不只是提出一个性能更好的方法，更重要的是<strong>视角的转换</strong>：它把持续学习重新放回贝叶斯框架中，让”旧知识如何保留”这个难题有了一个原则性的答案——后验就是记忆。相比之下 EWC 的 <span class="math math-inline">$\lambda$</span> 更像工程上的补丁，而 VCL 的超参数就是”没有超参数”。</p>
 <p>几个值得注意的点：</p>
 <ol>
 <li><p><strong>任务边界的假设</strong>：VCL（及同期工作）假设任务切换时刻已知，且多头网络需要知道当前任务 ID（task oracle）。这与真实世界中”任务连续演化、无明确边界”的场景还有差距，论文也在摘要中强调了”existing tasks evolve over time and entirely new tasks emerge”的动机，但实验设置仍偏理想化。</p>
@@ -1009,27 +1006,33 @@
   });
 </script>
 
-<script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  });
-  MathJax.Hub.Config({
-    tex2jax: {
-      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    }
-  });
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"],
+      ],
+      processEscapes: true,
+      skipTags: ["script", "noscript", "style", "textarea", "pre", "code"],
+    },
+    startup: {
+      ready() {
+        MathJax.startup.defaultReady();
+        MathJax.typesetPromise().then(() => {
+          const math = document.querySelectorAll("mjx-container");
+          math.forEach((element) => {
+            if (element.parentNode) {
+              element.parentNode.classList.add("has-jax");
+            }
+          });
+        });
+      },
+    },
+  };
 </script>
+
+<script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js" async></script>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
